@@ -1,0 +1,17 @@
+{
+  "name": "ReSec",
+  "author": "Kesh",
+  "description": "Logs player positions",
+  "version": "1.0",
+  "starmade_version": "0.203.155",
+  "client_mod": true,
+  "server_mod": false,
+  "main_class": "me.kesh.resec.resec",
+  "smd_resource_id": 2710,
+  "starloader_version": "0.4.000",
+  "dependencies": [
+    -1
+  ],
+  "core_mod": false,
+  "requires_class_resize": false
+}
