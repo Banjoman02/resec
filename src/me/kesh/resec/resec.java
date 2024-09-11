@@ -17,22 +17,19 @@ import java.util.Calendar;
 import java.util.Collection;
 
 public class resec extends StarMod {
+
+    public static int ticks = 1000;
+    public static boolean enabled = true;
+
     @Override
     public void onEnable() {
         System.err.println("[resec] enabled!!");
 
-        int ticks = 1000;
-        final boolean enabled = true;
-
         new StarRunnable(){
             @Override
             public void run(){
-                // Get all the names of the players
                 Collection<PlayerState> players = GameClient.getConnectedPlayers();
-                //ModPlayground.broadcastMessage("[SERVER] Resec effects failing");
                 for (PlayerState player : players){
-                    // get the playerstate
-                    //PlayerState player = GameServer.getServerState().getPlayerFromNameIgnoreCaseWOException(string);
 
                     String string = player.getName();
                     // Get the coordinates
