@@ -7,31 +7,22 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://D:/SteamLibrary/steamapps/common/StarMade/StarMade/StarMade.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://D:/SteamLibrary/steamapps/common/StarMade/StarMade/StarMade.jar!/src" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="file://D:/SteamLibrary/steamapps/common/StarMade/StarMade/lib" />
+          <root url="file://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/lib" />
+          <root url="jar://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/StarMade.jar!/" />
         </CLASSES>
         <JAVADOC />
         <NATIVE>
-          <root url="file://D:/SteamLibrary/steamapps/common/StarMade/StarMade/lib" />
+          <root url="file://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/lib" />
         </NATIVE>
         <SOURCES>
-          <root url="file://D:/SteamLibrary/steamapps/common/StarMade/StarMade/lib" />
+          <root url="file://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/lib" />
+          <root url="jar://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/StarMade.jar!/src" />
         </SOURCES>
-        <jarDirectory url="file://D:/SteamLibrary/steamapps/common/StarMade/StarMade/lib" recursive="false" />
-        <jarDirectory url="file://D:/SteamLibrary/steamapps/common/StarMade/StarMade/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/lib" recursive="false" />
+        <jarDirectory url="file://C:/Program Files (x86)/Steam/steamapps/common/StarMade/StarMade/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>

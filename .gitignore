@@ -2,6 +2,9 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea/artifacts/resec.xml
+.idea/misc.xml
+resec.iml
 
 ### Eclipse ###
 .apt_generated
