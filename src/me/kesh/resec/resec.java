@@ -1,12 +1,16 @@
 package me.kesh.resec;
 
 import api.ModPlayground;
+import api.listener.Listener;
 import api.common.GameClient;
 import api.mod.StarMod;
 import api.utils.StarRunnable;
-import org.lwjgl.Sys;
+import api.mod.StarLoader;
+import api.listener.events.input.KeyPressEvent;
 import org.schema.common.util.linAlg.Vector3i;
 import org.schema.game.common.data.player.PlayerState;
+import org.schema.schine.common.TextAreaInput;
+import org.schema.game.client.data.GameClientState;
 
 import java.io.IOException;
 import java.io.File;  // Import the File class
@@ -22,6 +26,8 @@ public class resec extends StarMod {
     public static boolean enabled = true;
     public static boolean show_ingame = false;
     public static int ticks = 1000;
+
+    public char toggle_key = '`';
 
     public static void saveCoordinateData(String save_path, String data) {
         File coords = new File(save_path);
@@ -47,6 +53,31 @@ public class resec extends StarMod {
     @Override
     public void onEnable() {
         System.err.println("[resec] enabled!!");
+
+        // Handle toggling with the keyboard.
+        StarLoader.registerListener(KeyPressEvent.class, this, new Listener<KeyPressEvent>() {
+            @Override
+            public void onEvent(KeyPressEvent event) {
+                // Ignore everything if the user had a GUI open.
+                TextAreaInput activeField = GameClientState.instance.getController().getInputController().getCurrentActiveField();
+                boolean hasGuisActive = activeField != null;
+                if(hasGuisActive){
+                    return;
+                }
+
+                if (event.getChar() == toggle_key){
+                    show_ingame = !show_ingame;
+                    if (show_ingame) {
+                        ModPlayground.broadcastMessage("[resec] Coordinate display ingame ENABLED!");
+                    }
+                    else {
+                        ModPlayground.broadcastMessage("[resec] Coordinate display ingame DISABLED!");
+                    }
+                }
+            }
+        });
+
+        // Handle retrieving coordinate information.
         new StarRunnable(){
             @Override
             public void run(){
