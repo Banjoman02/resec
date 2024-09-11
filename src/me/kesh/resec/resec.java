@@ -25,7 +25,7 @@ public class resec extends StarMod {
 
     public static boolean enabled = true;
     public static boolean show_ingame = false;
-    public static int ticks = 1000;
+    public static int ticks = 100;
 
     public char toggle_key = '`';
 
@@ -37,7 +37,7 @@ public class resec extends StarMod {
                 coords.createNewFile();
                 ModPlayground.broadcastMessage("Created coordinate file.");
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                System.err.println("[resec] FAILED TO WRITE COORDINATE FILE IDFK.");
             }
         }
         try {
