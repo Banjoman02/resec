@@ -23,11 +23,13 @@ import java.util.Collection;
 
 public class resec extends StarMod {
 
-    public static boolean enabled = true;
-    public static boolean show_ingame = false;
-    public static int ticks = 100;
+    public static boolean enabled = true; // Enables saving coordinate data to a local file.
+    public static boolean show_ingame = false; // Enables displaying data ingame
+    public static boolean creative_mode = false; // Enables creative mode for the user.
+    public static int ticks = 100; // Tickrate for coordinate checks.
 
-    public char toggle_key = '`';
+    public char coord_toggle_key = '`'; // Key that toggles the coordinate display
+    public char creative_toggle_key = ';'; // Key that toggles creative mode
 
     public static void saveCoordinateData(String save_path, String data) {
         File coords = new File(save_path);
@@ -50,6 +52,18 @@ public class resec extends StarMod {
         }
     }
 
+    public void creativeMode(boolean toggle) {
+        PlayerState player = GameClient.getClientPlayerState();
+        player.setHasCreativeMode(toggle);
+        player.setUseCreativeMode(toggle);
+        if (toggle) {
+            ModPlayground.broadcastMessage("[resec] Creative mode ENABLED!");
+        }
+        else {
+            ModPlayground.broadcastMessage("[resec] Creative mode DISABLED!");
+        }
+    }
+
     @Override
     public void onEnable() {
         System.err.println("[resec] enabled!!");
@@ -64,8 +78,10 @@ public class resec extends StarMod {
                 if(hasGuisActive){
                     return;
                 }
+                char event_key = event.getChar();
 
-                if (event.getChar() == toggle_key){
+                // Handle all key-press events.
+                if (event_key == coord_toggle_key){
                     show_ingame = !show_ingame;
                     if (show_ingame) {
                         ModPlayground.broadcastMessage("[resec] Coordinate display ingame ENABLED!");
@@ -73,6 +89,10 @@ public class resec extends StarMod {
                     else {
                         ModPlayground.broadcastMessage("[resec] Coordinate display ingame DISABLED!");
                     }
+                }
+                else if (event_key == creative_toggle_key){
+                    creative_mode = !creative_mode;
+                    creativeMode(creative_mode);
                 }
             }
         });
