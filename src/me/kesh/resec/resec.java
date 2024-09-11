@@ -55,7 +55,7 @@ public class resec extends StarMod {
                             }
                         }
                         //ModPlayground.broadcastMessage(saveline);
-                        String textfile = System.getProperty("user.home") + "/coords.txt";
+                        String textfile = System.getProperty("user.home") + File.separator + "/coords.txt";
                         try {
                             Files.write(Paths.get(textfile), saveline.getBytes(), StandardOpenOption.APPEND);
                         }
