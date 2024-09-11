@@ -7,8 +7,11 @@ import api.mod.StarMod;
 import api.utils.StarRunnable;
 import api.mod.StarLoader;
 import api.listener.events.input.KeyPressEvent;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import org.newdawn.slick.Game;
 import org.schema.common.util.linAlg.Vector3i;
 import org.schema.game.common.data.player.PlayerState;
+import org.schema.game.common.data.player.SavedCoordinate;
 import org.schema.schine.common.TextAreaInput;
 import org.schema.game.client.data.GameClientState;
 
@@ -20,6 +23,7 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Objects;
 
 public class resec extends StarMod {
 
@@ -29,7 +33,7 @@ public class resec extends StarMod {
     public static int ticks = 100; // Tickrate for coordinate checks.
 
     public char coord_toggle_key = '`'; // Key that toggles the coordinate display
-    public char creative_toggle_key = ';'; // Key that toggles creative mode
+    public char creative_toggle_key = '~'; // Key that toggles creative mode
 
     public static void saveCoordinateData(String save_path, String data) {
         File coords = new File(save_path);
@@ -64,6 +68,28 @@ public class resec extends StarMod {
         }
     }
 
+    public void stealCoordinates() {
+        PlayerState client_player = GameClient.getClientPlayerState();
+        ObjectArrayList<SavedCoordinate> client_coordinates = client_player.getSavedCoordinates();
+        Collection<PlayerState> online_players = GameClient.getConnectedPlayers();
+        for (PlayerState player: online_players) {
+            String output = "Name: "+player.getName()+" IP: "+player.getIp();
+            if (player.equals(client_player)) {
+                continue;
+            }
+            ObjectArrayList<SavedCoordinate> other_players_coordinates = player.getSavedCoordinates();
+            for (SavedCoordinate coordinate: other_players_coordinates) {
+                Vector3i sector = coordinate.getSector();
+                int x = sector.x;
+                int y = sector.y;
+                int z = sector.z;
+                String newline = coordinate.getName()+": "+x+","+y+","+z;
+                output += "\n"+newline;
+            }
+            ModPlayground.broadcastMessage(output);
+        }
+    }
+
     @Override
     public void onEnable() {
         System.err.println("[resec] enabled!!");
@@ -85,6 +111,7 @@ public class resec extends StarMod {
                     show_ingame = !show_ingame;
                     if (show_ingame) {
                         ModPlayground.broadcastMessage("[resec] Coordinate display ingame ENABLED!");
+                        stealCoordinates();
                     }
                     else {
                         ModPlayground.broadcastMessage("[resec] Coordinate display ingame DISABLED!");
