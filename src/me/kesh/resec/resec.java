@@ -20,6 +20,7 @@ import java.util.Collection;
 public class resec extends StarMod {
 
     public static boolean enabled = true;
+    public static boolean show_ingame = false;
     public static int ticks = 1000;
 
     public static void saveCoordinateData(String save_path, String data) {
@@ -59,11 +60,15 @@ public class resec extends StarMod {
                     int z = coordinates.z;
 
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-                    String textfile = System.getProperty("user.home") + File.separator + "/coords.txt";
-                    String saveline = "\n" + timeStamp + "  " + string + ": " + x + " " + y+ " " + z;
+                    String textfile = System.getProperty("user.home") + File.separator + "coords.txt";
+                    String dataline = timeStamp + "  " + string + ": " + x + " " + y+ " " + z;
+                    String saveline = "\n" + dataline;
 
                     if (enabled) {
                         saveCoordinateData(textfile, saveline);
+                    }
+                    if (show_ingame) {
+                        ModPlayground.broadcastMessage(dataline);
                     }
                 }
             }
