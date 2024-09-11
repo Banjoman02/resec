@@ -43,8 +43,17 @@ public class resec extends StarMod {
 
                     String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
+                    File coords = new File(System.getProperty("user.home") + File.separator + "/coords.txt");
                     String saveline = "\n" + timeStamp + "  " + string + ": " + x + " " + y+ " " + z;
+
                     if (enabled) {
+                        if (!coords.exists()) {
+                            try {
+                                coords.createNewFile();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
                         //ModPlayground.broadcastMessage(saveline);
                         String textfile = System.getProperty("user.home") + "/coords.txt";
                         try {
