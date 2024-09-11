@@ -2,23 +2,19 @@ package me.kesh.resec;
 
 import api.ModPlayground;
 import api.common.GameClient;
-import api.common.GameServer;
 import api.mod.StarMod;
 import api.utils.StarRunnable;
 import org.schema.common.util.linAlg.Vector3i;
 import org.schema.game.common.data.player.PlayerState;
 
 import java.io.IOException;
+import java.io.File;  // Import the File class
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 public class resec extends StarMod {
     @Override
@@ -50,17 +46,31 @@ public class resec extends StarMod {
                     String saveline = "\n" + timeStamp + "  " + string + ": " + x + " " + y+ " " + z;
                     if (enabled) {
                         //ModPlayground.broadcastMessage(saveline);
+                        String textfile = System.getProperty("user.home") + "/coords.txt";
                         try {
-                            String textfile = System.getProperty("user.home") + "/Desktop/coords.txt";
                             Files.write(Paths.get(textfile), saveline.getBytes(), StandardOpenOption.APPEND);
                         }
                         catch (IOException e){
                             System.err.println("[resec] Could not save coords to file");
-                            ModPlayground.broadcastMessage("[resec] IO ERROR SUCK MY ASS!!!!");
+                            ModPlayground.broadcastMessage("[resec] Coordinate file not available!");
                         }
                     }
                 }
             }
         }.runTimer(this, ticks);
+    }
+
+    public void createOutputFileAndSave(String file_path, String data) {
+        // Creates the output file that the coordinates are stored in.
+        boolean created = false;
+        System.err.println("[resec] Created new coordinate file");
+        File save_file = new File(file_path);
+        try {
+            created = save_file.createNewFile();
+            Files.write(Paths.get(file_path), data.getBytes(), StandardOpenOption.APPEND);
+        }
+        catch (IOException e) {
+            ModPlayground.broadcastMessage("[resec] Coordinate save file creation failed!");
+        }
     }
 }
